@@ -4,125 +4,88 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const menuItems = [
+  { name: 'Serviços', href: '/servicos' },
+  { name: 'Preços', href: '/precos' },
+  { name: 'Sobre', href: '/sobre' },
+  { name: 'Contato', href: '/contato' },
+];
 
-  const menuItems = [
-    { href: '/', label: 'Início' },
-    { href: '/servicos', label: 'Serviços' },
-    { href: '/precos', label: 'Preços' },
-    { href: '/sobre', label: 'Sobre' },
-    { href: '/contato', label: 'Contato' },
-  ];
+export default function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed w-full bg-white/80 backdrop-blur-md z-50 shadow-sm">
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-blue-600">TechFix</span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-byteDarker/80 backdrop-blur-sm border-b border-petrolDark">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <div className="w-10 h-10 bg-bit rounded-lg flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <span className="ml-2 text-xl font-bold text-white">TechFix</span>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
             {menuItems.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 href={item.href}
-                className="text-gray-600 hover:text-blue-600 transition-colors"
+                className="text-white/80 hover:text-bit transition-colors"
               >
-                {item.label}
+                {item.name}
               </Link>
             ))}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors"
+            <Link
+              href="/admin/login"
+              className="bg-bit text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
             >
-              Agende Agora
-            </motion.button>
-            <Link href="/admin/login">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-900 transition-colors"
-              >
-                Painel Admin
-              </motion.button>
+              Área Administrativa
             </Link>
-          </div>
+          </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile menu button */}
           <button
-            className="md:hidden text-gray-600"
-            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden text-white/80 hover:text-bit"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {isOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden mt-4"
+      {/* Mobile menu */}
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: isMobileMenuOpen ? 1 : 0, height: isMobileMenuOpen ? 'auto' : 0 }}
+        transition={{ duration: 0.3 }}
+        className="md:hidden bg-byteDarker border-b border-petrolDark"
+      >
+        <div className="px-4 pt-2 pb-3 space-y-1">
+          {menuItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="block px-3 py-2 text-white/80 hover:text-bit transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ))}
+          <Link
+            href="/admin/login"
+            className="block px-3 py-2 text-white/80 hover:text-bit transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
-            <div className="flex flex-col space-y-4">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-gray-600 hover:text-blue-600 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors w-full"
-              >
-                Agende Agora
-              </motion.button>
-              <Link href="/admin/login" onClick={() => setIsOpen(false)}>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-900 transition-colors w-full"
-                >
-                  Painel Admin
-                </motion.button>
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </nav>
+            Área Administrativa
+          </Link>
+        </div>
+      </motion.div>
     </header>
   );
-};
-
-export default Header; 
+} 

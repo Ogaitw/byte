@@ -27,8 +27,8 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-byteDarker">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-bit"></div>
       </div>
     );
   }
@@ -82,7 +82,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
       {/* Overlay para fechar o menu em dispositivos móveis */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-gray-800 bg-opacity-75 z-20 lg:hidden"
+          className="fixed inset-0 bg-deepPetrolDarker bg-opacity-75 z-20 lg:hidden"
           onClick={toggleSidebar}
         />
       )}
@@ -92,13 +92,13 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
         initial={{ x: -300 }}
         animate={{ x: isOpen ? 0 : -300 }}
         transition={{ duration: 0.3 }}
-        className={`fixed top-0 left-0 z-30 h-screen w-64 bg-gray-900 text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 left-0 z-30 h-screen w-64 bg-deepPetrolDarker text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-800">
+        <div className="flex items-center justify-between p-4 border-b border-petrolDark">
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-2">
+            <div className="w-8 h-8 bg-bit rounded-full flex items-center justify-center mr-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
@@ -123,8 +123,8 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
                   href={item.href}
                   className={`flex items-center p-3 rounded-lg transition-colors ${
                     pathname === item.href 
-                      ? 'bg-blue-600 text-white' 
-                      : 'text-gray-300 hover:bg-gray-800'
+                      ? 'bg-bit text-white' 
+                      : 'text-white/70 hover:bg-petrolDark'
                   }`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -137,13 +137,13 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
           </ul>
         </nav>
         
-        <div className="absolute bottom-0 w-full p-4 border-t border-gray-800">
+        <div className="absolute bottom-0 w-full p-4 border-t border-petrolDark">
           <button 
             onClick={() => {
               localStorage.removeItem('adminToken');
               window.location.href = '/admin/login';
             }}
-            className="flex items-center w-full p-3 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors"
+            className="flex items-center w-full p-3 text-white/70 hover:bg-petrolDark rounded-lg transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -159,10 +159,10 @@ const Sidebar = ({ isOpen, toggleSidebar }: { isOpen: boolean; toggleSidebar: ()
 // Componente de cabeçalho
 const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
   return (
-    <header className="bg-white shadow-sm z-10">
+    <header className="bg-byteDarker shadow-sm z-10 border-b border-petrolDark">
       <div className="flex items-center justify-between p-4">
         <button 
-          className="lg:hidden text-gray-500 hover:text-gray-700"
+          className="lg:hidden text-white/80 hover:text-bit"
           onClick={toggleSidebar}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -172,18 +172,18 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
         
         <div className="flex-1 lg:ml-64">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold text-gray-800">Painel Administrativo</h1>
+            <h1 className="text-xl font-semibold text-white">Painel Administrativo</h1>
             
             <div className="flex items-center space-x-4">
-              <button className="text-gray-500 hover:text-gray-700">
+              <button className="text-white/80 hover:text-bit">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
               </button>
               
               <div className="relative">
-                <button className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                <button className="flex items-center space-x-2 text-white/80 hover:text-bit">
+                  <div className="w-8 h-8 bg-bit rounded-full flex items-center justify-center text-white">
                     A
                   </div>
                   <span className="hidden md:block">Admin</span>
@@ -212,7 +212,7 @@ export default function AdminLayout({
   
   return (
     <AuthGuard>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-byteDarker">
         <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
         <Header toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
         
